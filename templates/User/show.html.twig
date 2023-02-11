@@ -1,0 +1,92 @@
+
+{% extends 'Main/base_test.html.twig' %}
+
+{% block body %}
+	{{ parent() }}
+	<section>
+		<div class="box box-primary">
+            <div class="box-header with-border">
+              <h3>Visualizar Usuario</h3>   
+			  <div style="text-align: right">
+    					<a href="{{ path('mantenedor_user_index') }}" class="btn btn-success">Volver a Lista</a>
+        			</div>
+              </div>
+
+		<div class="box-body">
+    		<br>
+		<div class="form-row align-items-center">
+					<legend>Datos Personales</legend>
+					<div class="col-lg-6">
+						<div class="form-group">
+							<label for="rutPersona">Rut</label>
+							<input value="{{ user.persona.rut }}" disabled type="text" class="form-control" name="rutPersona" id="rutPersona" maxlength="12" required autocomplete="off" index="1">
+						</div>
+						<div class="form-group">
+							<label for="apellidoPersona">Apellido</label>
+							<input value="{{ user.persona.lastname }}" type="text" class="form-control" name="apellidoPersona" id="apellidoPersona" disabled required index="2"> 
+						</div>
+						<div class="form-group">
+							<label for="correoPersona">Correo</label>
+							<input type="email" value="{{ user.persona.mail}}" class="form-control" name="correoPersona" id="correoPersona" disabled  index="3">
+						</div>
+					</div>
+					<div class="col-lg-6">
+						<div class="form-group">
+							<label for="nombrePersona">Nombre</label>
+							<input type="text" value="{{ user.persona.name}}" class="form-control" name="nombrePersona" id="nombrePersona" disabled required>
+						</div>
+						<div class="form-group">
+							<label for="sexoPersona">Sexo</label>
+							<select class="form-control" name="sexoPersona" id="sexoPersona" disabled required>
+								<option value="0">Seleccione</option>
+								<option value="m" {{ user.persona.gender=='m'?'selected':'' }}>Masculino</option>
+								<option value="f" {{ user.persona.gender=='f'?'selected':'' }}>Femenino</option>
+							</select>
+						</div>
+						<div class="form-group">
+							<label for="phonePersona">Teléfono</label>
+							<input type="number" value="{{ user.persona.phone }}" class="form-control" id="phonePersona" name="phonePersona" disabled>
+						</div>
+					</div>
+				<div class="form-row align-items-center">
+					<legend>Datos de Usuario</legend>
+					<div class="col-lg-6">
+						
+						<div class="form-group">
+							<label for="especialidad">ROL</label>
+               {% for rol in user.roles %}
+	               <br>-{{ rol}}
+    
+                 {% endfor %}
+
+						</div>
+                 
+					</div>
+				</div>
+				<div class="col-md-12">
+					<div class="row">
+						<div class="col-md-4">
+	            
+	    </div>
+						<div class="col-md-4">
+							<div style="text-align: right">
+            <a href="{{ path('mantenedor_user_edit', { 'id': user.id }) }}" class="btn btn-primary ">
+                    <span class="glyphicon glyphicon-edit"></span>
+                                        {{ 'Editar Usuario'|trans }}
+             </a>
+                             </div>	
+						</div>	
+						<div class="col-md-4">
+							<div style="text-align: right">
+            {{ form_start(delete_form) }}
+            <input type="submit" class="btn btn-danger" value="Borrar">
+            {{ form_end(delete_form) }}
+                			</div>
+						</div>			
+	    </div>
+	    
+	</div>
+			</form>
+      </div>
+	</section>
+{% endblock %}	

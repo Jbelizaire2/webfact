@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Galeria Imagenes!{% endblock %}
+
+{% block body %}
+
+<!-- Carousel wrapper -->
+<!-- Gallery -->
+ 
+<div class="row row-cols-1 row-cols-md-3 g-4">
+ {% for d in imagenes %}
+
+
+
+
+<div class="col">
+    <div class="card">
+  
+        {%  if( d.archivo == '') %}
+      <img src="{{ d.url }}" class="card-img-top" alt="{{ d.titulo }}">
+        {% else %}
+       <img src="{{ asset('uploads/'~ d.archivo) }}" class="card-img-top" alt="{{ d.titulo }}">
+         {% endif %}
+      <div class="card-body">
+        <h5 class="card-title">{{ d.titulo }}</h5>
+        <p class="card-text">{{ d.descripcion|capitalize  }}</p>
+         <a href="{{ path('login') }}" class="btn btn-primary">Volver</a>
+      </div>
+    </div>
+  </div>
+ {% endfor %}
+</div>
+
+
+
+<!-- Carousel wrapper -->
+{% endblock %}

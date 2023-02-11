@@ -1,0 +1,82 @@
+{%   extends 'Main/base_test.html.twig'    %}  
+
+{% block body %}
+   
+           <div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title">UPLOAD FILE IMAGEN</h3>
+            </div>
+				
+	
+              {{form_start(form, { 'enctype':"multipart/form-data"})}}
+
+
+              <div class="box-body">
+              <div class="col-md-6">
+
+
+          
+
+              <div class="form-group">
+              {{ form_label(form.archivo) }}
+			        {{ form_widget(form.archivo, {'attr': {'class': 'form-control'}}, {'id': 'archivo'}) }}
+			        <span class="text-danger">{{ form_errors(form.archivo) }}</span>
+
+
+
+        <br>
+			      <p>
+
+			    	<input type="submit" class="btn btn-success " value="Guardar" id="guardarx1" onclick='buswa()'>
+
+		        </p> 
+
+              {{ form_end(form) }}
+
+              
+             <ul>
+                  <li>
+                    <a href="{{ path('mantenedor_image_index') }}">Volver a Lista</a>
+                </li>
+          	</ul>  
+
+              </div>
+           </div>
+
+
+          </div>
+
+{% endblock %}
+
+{% block javascripts %}
+<script type="text/javascript">
+	$(function() {
+
+	});
+
+
+    function buswa(){
+   let archivo = $("#appbundle_imagen1_archivo").val();
+   let extensiones = archivo.substring(archivo.lastIndexOf("."));
+   if (archivo=="") {
+   swal("El archivo no puede estar vacio!");
+    return false;
+   }else if(extensiones != ".xlsx" && extensiones != ".xls" && extensiones != ".csv")
+{
+    swal("El archivo de tipo " + extensiones + "  no es válido");
+    return false;
+}
+		
+    
+
+		$('[name=appbundle_imagen1]').submit(); 
+ return true;
+   
+
+	}
+  
+
+
+</script>
+
+{% endblock %}

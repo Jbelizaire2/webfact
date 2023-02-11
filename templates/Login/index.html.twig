@@ -1,0 +1,36 @@
+{% extends 'base_login.html.twig' %}
+
+
+{% block stylesheets %}
+	<link rel="stylesheet" type="text/css" href="{{ asset('assets/main/css/login.css') }}">
+{% endblock %}
+{% block body %}
+  {% if error %}
+        <div class="alert alert-danger" role="alert">{{ error.messageKey|trans(error.messageData, 'security') }}
+		 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+		</div>
+    {% endif %}
+	
+	<div class="login-page">
+        <a type="button" class="btn btn-warning" href="{{ path('app_galeria_img') }}">
+            <span aria-hidden="true">Ver galer&iacute;a de imágenes</span>
+        </a>
+	  <div class="form">
+		<img src="{{ asset('assets/main/image/logowebfact.png') }}" style="margin-top: -30px; margin-bottom: 10px;">
+	    <form class="login-form" method="POST" action="{{ path('login') }}">
+	      <input type="text" placeholder="Usuario" name="_username" value="{{ last_username }}" required/>
+	      <input type="password" placeholder="Contraseña" name="_password" required/>
+		    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+			<input type="hidden" name="_target_path" value="/mantenedor" />
+
+	      <button type="submit" name="login">login</button>
+		  
+	    </form>
+	  </div>
+	</div>
+{% endblock %}
+
+{% block javascripts %}
+{% endblock %}

@@ -1,0 +1,152 @@
+{% extends 'base_test.html.twig' %}
+
+{% block body %}
+	{{ parent() }}
+	<div class="container well">
+	    <div class="col-md-9">
+
+     {{ form_start(edit_form, { 'attr' : {'novalidate': 'novalidate', 'role' : 'form'} }) }}
+	    <h2>Usuario:  {{ user.username}}</h2>
+
+	        <table class="table table-bordered table-striped" style='width:400px'>
+	        	<thead>
+	        	<tr class="table-primary bg-success"><th  >Campos </th><th> Valores</th></tr>
+	        	</thead>
+	            <tr><th>Id</th>
+	               <td>  {{ user.id }}   &nbsp;
+	               	   <input type="hidden" name="id" id='id' value='{{ user.id }}'>
+	               	   <input type="hidden" name="rol" id='rol' value='1'>
+	            </tr>
+	            <tr>
+	               <th>Nombre: </th>
+	               <td> <input type="text" class='form-control' name="name" id="name" value="{{ user.persona.name }}">
+	            </tr>
+	            <tr>
+	               <th>Apellido: </th>
+	               <td> <input type="text" class='form-control' name="last_name" id="lastname" value="{{ user.persona.lastname }}">
+	            </tr>	            
+	            <tr>
+	            <th>Rut</th>
+	            <td>	             
+	                 <input class='form-control' type="text" name="rut" id="rut" value="{{ user.persona.rut }}">	                
+	            </dt>
+	        
+				<tr>
+	            <th>Sexo</th>
+	            <td>
+	                {{ form_widget(edit_form.persona.gender, {'attr': {'class': 'form-control', 'placeholder' : 'Sexo'}}) }}
+	            </tr>
+	            <tr>
+	                 <th>  Telefono</th>
+   	                 <td>  <input class='form-control' type="text" name="phone" id="phone" value="{{ user.persona.phone }}">
+	            </tr>
+
+
+				<tr>
+	                 <th>  Correo</th>
+   	                 <td> <input class='form-control' type="text" name="mail" id="mail" value="{{ user.persona.mail }}">
+	            </tr>
+
+	            <tr>
+	            <th>  Usuario</th>
+	            <td>	             
+	              <input class='form-control' type="text" name="username" id="username" value="{{ user.username }}">
+	                 
+	            </tr>
+
+	            <tr>
+	            <th>  Clave </th>
+	            <td>	             
+	              <input class='form-control' type="password" name="password" id="password" value="">
+	                 
+	            </tr>
+
+	            <tr>
+	            <th>
+                Fecha de Creación</th>
+	            <td>
+	             {% if user.dateCreated %}{{ user.dateCreated|date('Y-m-d H:i:s') }}{% endif %}
+	                &nbsp;
+	            </tr>
+	             <tr>
+	            <th>Sucursal</th>
+	            <td>
+	                {{ form_widget(edit_form.sucursal, {'attr': {'class': 'form-control'}}) }}
+	            </tr>
+	             <tr>
+	            <th>Status</th>
+	            <td>
+	                {{ form_widget(edit_form.status, {'attr': {'class': 'form-control'}}) }}
+	            </tr>
+	             <tr>
+	             <th colspan="2">Roles</th>
+	             <tr>
+	            <td  colspan="2">
+	            	<select class="form-control roles" name="roles" id="roles" required multiple>
+	            		{% for rol in roles %}	
+	            			{% set selec  = "" %}
+	            			  {% for  rus in user.roles %}
+	            			  	    {%  if rus==rol.name  %}
+	            			      	   {% set selec  = "selected='selected'" %}
+	            			      	{% endif %} 
+	            			    {% endfor %} 	
+	                            <option value="{{ rol.id }}"  {{ selec|raw }}>{{ rol.name }}</option>	                        	                        
+                          {% endfor %}								
+							</select>
+
+               
+                 
+	                &nbsp;
+	            </tr>
+	            
+	        </table>
+	    </div>
+
+	    <div class="col-md-3">
+	        <h3>{{ 'Acciones' }}:</h3>
+	     <p>
+            <input type="submit" class="btn btn-success " value="Guardar" id="guardarx1" onclick='buswa()'>
+
+            </form>
+        </p>
+	     
+        <p>            
+            <a href="{{ path('mantenedor_user_index') }}" class="btn btn-info ">Volver a lista</a>
+        </p>
+
+
+	    </div>
+	    
+	</div>
+      <div class="col-md-4">
+      <ul>
+      <br>
+    
+        <li>
+            <a href="{{ path('mantenedor_user_index') }}">Volver a lista</a>
+        </li>
+        
+     </ul>
+      </div>
+{% endblock %}
+
+{% block javascripts %}
+<script type="text/javascript">
+	$(function() {
+
+		$('.roles').select2({
+			placeholder: 'Seleccione',
+  			allowClear: true,
+  			tags: true
+		});
+
+	
+	});
+
+	 function buswa(){
+	
+		$('[name=appbundle_user]').submit();  
+
+	}
+</script>	
+{% endblock %}

@@ -1,0 +1,92 @@
+{% extends 'base_test.html.twig' %}
+
+{% block body %}
+{{ parent() }}
+    <div class="container well">
+        <div class="col-md-10">
+    <h1>Usuario</h1>
+    <table>
+        <tbody>
+
+            <tr>
+                <th>Id</th>
+                <td>{{ user.id }}</td>
+            </tr>
+
+
+            <tr>
+                <th>Nombre</th>
+                <td>{{ user.persona.name }}</td>
+            </tr>
+             <tr>
+                <th>Apellido</th>
+                <td>{{ user.persona.lastName }}</td>
+            </tr>
+            <tr>
+                <th>Rut</th>
+                <td>{{ user.persona.rut }}</td>
+            </tr>
+            <tr>
+                <th>Sexo</th>
+                <td>{{ user.persona.gender }}</td>
+            </tr>
+            <tr>
+                <th>Telefono</th>
+                <td>{{ user.persona.phone }}</td>
+            </tr>
+             <tr>
+                <th>Usuario</th>
+                <td>{{ user.username }}</td>
+            </tr>
+        
+            <tr>
+                <th>Fecha de Creado</th>
+                <td>{% if user.dateCreated %}{{ user.dateCreated|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+           
+            <tr>
+                <th>Inicio de Sesión</th>
+                <td>{% if user.dateLastLogin %}{{ user.dateLastLogin|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Sucursal</th>
+                <td>{{ user.sucursal }}</td>
+            </tr>
+            <tr>
+                <th>Status</th>
+                <td>{{ user.status }}</td>
+            </tr>
+            <tr>
+                <th>Rol</th>
+                <td>{{ user.rol }}</td>
+            </tr>
+              
+        </tbody>
+    </table>
+
+     </div>
+
+          <p>
+            <a href="{{ path('mantenedor_user_edit', { 'id': user.id }) }}" class="btn btn-primary ">
+                    <span class="glyphicon glyphicon-edit"></span>
+                    {{ 'Editar usuario'|trans }}
+             </a>
+        </p>
+       <br>
+        <p>
+            {{ form_start(delete_form) }}
+            <input type="submit" class="btn btn-danger" value="Borrar">
+            {{ form_end(delete_form) }}
+
+       </p>
+      <div class="col-md-4">
+      <ul>
+      <br>
+    
+        <li>
+            <a href="{{ path('mantenedor_user_index') }}">Volver a lista</a>
+        </li>
+        
+     </ul>
+      </div>
+{% endblock %}

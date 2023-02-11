@@ -1,0 +1,119 @@
+{% extends 'Main/base_test.html.twig' %}
+
+
+{% block body %}
+
+
+ {#  <!-- fix for small devices only -->
+  {% set total = 0 %}
+  <div class="col-md-4 col-sm-8 col-xs-12">
+    <div class="info-box">
+      <span class="info-box-icon bg-green"><i class="fas fa-chart-line"></i></span>
+     <div class="info-box-content">
+        <span class="info-box-text">Folios al {{ "now"|date('d/m/Y') }}</span>
+        {% for can in cantidadFolio %} 
+        <span class="info-box-number" style="color: green; font-size: 25px;"> {{ can.usadoFolio }}  /  {{ can.folioUntil }}</span>
+        {% set total = can.folioUntil - can.usadoFolio %}        
+        {% endfor %}
+        Disponible:  {{ total }}  
+        
+      </div>
+      <!-- /.info-box-content -->
+    </div>
+    <!-- /.info-box -->
+  </div>
+
+  <!-- fix for small devices only -->
+  {% set total = 0 %}
+  <div class="col-md-4 col-sm-8 col-xs-12">
+    <div class="info-box">
+      <span class="info-box-icon bg-yellow"><i class="fas fa-chart-line"></i></span>
+     <div class="info-box-content">
+        <span class="info-box-text">Notas de Credito al {{ "now"|date('d/m/Y') }}</span>
+        {% for can in cantidadNotaC %} 
+        <span class="info-box-number" style="color: green; font-size: 25px;">{{ can.usadoNotaCredito }}  /  {{ can.folioUntil }}</span>
+        {% set total = can.folioUntil - can.usadoNotaCredito %}        
+        {% endfor %}
+        Disponible:  {{ total }}  
+    </div>
+      <!-- /.info-box-content -->
+    </div>
+    <!-- /.info-box -->
+    </div>
+
+  <!-- fix for small devices only -->
+  <div class="col-md-3 col-sm-6 col-xs-12">
+    <div class="info-box" >
+      <span class="info-box-icon bg-red"><i class="ion ion-ios-people-outline"></i></span>
+
+     <div class="info-box-content" >
+        <span class="info-box-text">Cajas conectadas   {{ "now"|date('d/m/Y') }}</span>
+        
+        {% for can in cantidadCaja %} 
+
+        <span class="info-box-number" style="color: green; font-size: 25px;" > {{ can.caja }} </span>  
+        <a style="color: green; font-size: 15px;" href="">Click aqui</a>
+        {% endfor %}
+      </div>
+      <!-- /.info-box-content -->
+    </div>
+    <!-- /.info-box -->
+  </div>
+
+    <!-- fix for small devices only -->
+  <div class="col-md-3 col-sm-6 col-xs-12">
+    <div class="info-box" >
+      <span class="info-box-icon bg-aqua"><i class="ion ion-ios-gear-outline"></i></span>
+
+     <div class="info-box-content" >
+        <span class="info-box-text">Total Cajas sin Revisión</span>
+        {% for can in check %} 
+        <span class="info-box-number" style="color: green; font-size: 25px;" > {{ can.cantidad }}</span>
+        <a style="color: green; font-size: 15px;" href="">Click aqui</a>
+        {% endfor %}
+    </div>
+      <!-- /.info-box-content -->
+    </div>
+    <!-- /.info-box -->
+  </div>
+   <!-- fix for small devices only -->
+         <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="info-box">
+            <span class="info-box-icon bg-yellow"><i class="ion ion-ios-people-outline"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-text">Total Cajas Sin Cerrar</span>
+               {% for can in CAbiertas %} 
+              <span class="info-box-number" style="color: green; font-size: 25px;">{{ can.cantidad }} </span>
+               <a style="color: green; font-size: 15px;" href="">Click aqui</a>
+               {% endfor %}
+        </div>
+      <!-- /.info-box-content -->
+    </div>
+    <!-- /.info-box -->
+  </div> #}
+    
+
+{% endblock %}
+
+{% block javascripts %}
+<script type="text/javascript">
+  $(function() {
+    loadSales();
+
+    function loadSales(){
+      $.ajax({
+        url: "",
+        dataType: "json",
+        type: "POST"
+      })
+      .done(function(data) {
+        $('#cajas').html(data.cajasConectadas.diaria);
+
+      })
+    }
+
+  });
+
+</script>
+{% endblock %}

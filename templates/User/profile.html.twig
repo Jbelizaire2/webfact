@@ -1,0 +1,123 @@
+{% extends 'base_test.html.twig' %}
+
+{% block title %}PERFIL{% endblock %}
+{% block subtitle %}USUARIO{% endblock %}
+
+{% block body %}
+	<section>
+		<div class="col-lg-12 well">
+			<div style="text-align: center;">
+				<img src="{{ asset('assets/main/image/person_default.png') }}" class="user-image img-profile" alt="User Image">
+				<h3>{{ app.user.fullname|capitalize }}</h3>
+			</div>
+			<div class="card-profile" style="display:block; overflow: auto;">
+				<div class="col-lg-6">
+					<form id="formUser">
+						<div class="form-group">
+							<label for="nombrePersona">Nombre</label>
+							<input type="text" class="form-control" name="nombrePersona" id="nombrePersona" required>
+						</div>
+
+						<div class="form-group">
+							<label for="apellidoPersona">Apellido</label>
+							<input type="text" class="form-control" name="apellidoPersona" id="apellidoPersona" required>
+						</div>
+
+						<div class="form-group">
+							<label for="correoPersona">Correo</label>
+							<input type="email" class="form-control" name="correoPersona" id="correoPersona">
+						</div>
+
+						<div class="form-group">
+							<label for="sexoPersona">Sexo</label>
+							<select class="form-control" name="sexoPersona" id="sexoPersona" required>
+								<option value="0" selected>Seleccione</option>
+								<option value="m">Masculino</option>
+								<option value="f">Femenino</option>
+							</select>
+						</div>
+						<input type="submit" id="btnValidate" class="btn btn-primary" value="Actualizar">
+					</form>
+				</div>
+			</div>
+		</div>
+	</section>
+{% endblock %}
+{% block css %}
+	<style type="text/css">
+		.card-profile{
+			background-color: #fff;
+			border-color: #ddd;
+			border-width: 1px;
+			border-radius: 4px 4px 4px 4px;
+			padding: 140px 15px 15px;
+			margin-top: -140px;
+			border-style: solid;
+		}
+		.img-profile{
+			border-color: #00a65a;
+			border-width: 2px;
+			border-style: solid;
+			border-radius: 50%;
+			background-color: #00a65a;
+		}
+	</style>
+{% endblock %}
+
+{% block javascripts %}
+<script type="text/javascript">
+	$(function() {
+
+		$.ajax({
+			url: "/contabilidad/persona/"+{{app.user.persona.rut}},
+			dataType: "json",
+			type: "POST"
+		}).done(function(data) {
+			$('#nombrePersona').val(data.name);
+			$('#apellidoPersona').val(data.last_name);
+			$('#correoPersona').val(data.mail);
+			$('#sexoPersona').val(data.gender);
+		});
+
+		$("#formUser").on("submit", function(e){
+			e.preventDefault();
+			$.ajax({
+				url: "{{ path('accounting_boleta_persona_update') }}",
+				dataType: "json",
+				data: {"name" : $('#nombrePersona').val(), "last_name" : $('#apellidoPersona').val(),
+					   "rut": {{app.user.persona.rut}}, "mail":$('#correoPersona').val(), "gender":$('#sexoPersona').val()},
+				type: "POST"
+			})
+			.done(function(data) {
+				$.iGrowl({
+		            title: 'Bien Hecho',
+		            message: 'Perfil Actualizado Correctamente!',
+		            type: data.type,
+		            icon: data.icon,
+		            animShow: 'fadeInDown',
+		            animHide: 'fadeOutRight',
+		            placement : {
+		            x:  'right',
+		            y:  'top'
+		            }
+		        });
+			})
+			.fail(function(data) {
+			    $.iGrowl({
+		            title: 'Error',
+		            message: 'Ocurrio un error inesperado, vuelva a intentarlo!',
+		            type: 'error-sat',
+		            icon: 'steadysets-forbidden',
+		            animShow: 'fadeInDown',
+		            animHide: 'fadeOutRight',
+		            placement : {
+		            x:  'right',
+		            y:  'top'
+		            }
+		        });
+			});
+		});
+
+	});
+</script>
+{% endblock %}

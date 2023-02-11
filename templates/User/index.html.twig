@@ -1,0 +1,114 @@
+{% extends 'Main/base_test.html.twig' %}
+
+{% block title %}MANTENEDOR{% endblock %}
+{% block subtitle %}Usuarios{% endblock %}
+
+{% block body %}
+<style type="text/css">
+	#example td, th{
+		text-align: center; 
+    	vertical-align: middle;
+	}
+</style>
+<legend><h3><label>Lista de Usuarios</label></h3></legend>
+
+   <div style="text-align:right">
+        <a type="button" class="btn btn-success" style="width:80px;" href="{{ path('mantenedor_user_create') }}">
+            <span class="fa fa-plus" aria-hidden="true"></span>
+        </a>
+		</div>
+
+<table id="example" class="table table-striped table-bordered"  style="table-layout: fixed; border-color: #fff">
+	<thead>
+		<tr>
+		
+             <th width="30px">#</th>
+			 <th>Usuario </th>
+			 <th>Nombre </th>
+			 <th>Apellido </th>
+			 <th>Rut </th>
+			 <th>Sexo </th>
+			 <th>Correo </th>
+			 <th>Rol </th>
+            
+
+			<th width="20px">Ver</th>
+             <th width="70px">Modificar</th>
+             <th width="80px">Eliminar</th>
+		</tr>
+	</thead>
+
+	<tbody>
+		  {% for user in users %}
+	
+         <tr data-id="{{ user.id }}"
+		  data-username="{{ user.username }}"
+		  data-name="{{ user.persona.name|capitalize }}"
+		  data-lastname="{{ user.persona.lastName|capitalize }}"
+		  data-rut="{{ user.persona.rut}}"
+		  data-mail="{{ user.persona.mail}}"
+		  data-sucursal="{{ user.persona.gender|capitalize }}"
+	       data-rol="{{ user.roles[0]}}"
+		  >
+		  <td>{{ loop.index}}</td>		
+		  <td style="text-align: center;">{{ user.username }}</td>
+		  <td style="text-align: center;">{{ user.persona.name|capitalize}}</td>
+		  <td style="text-align: center;">{{ user.persona.lastName|capitalize}}</td>
+		  <td style="text-align: center;">{{ user.persona.rut }}</td>
+		  <td style="text-align: center;">{{ user.persona.gender|capitalize }}</td>
+		  <td style="text-align: center;">{{ user.persona.mail }}</td>
+		
+		   <td style="text-align: center;">{{user.roles[0]}} </td>
+
+		  
+		         <td>
+                    <a type="button" class="btn btn-success show" href="{{ path('mantenedor_user_show', { 'id': user.id }) }}">
+                        <span class="fa fa-eye" aria-hidden="true"></span>       
+                    </a>
+                </td>
+                <td>
+                    <a type="button" class="btn btn-warning update" href="{{ path('mantenedor_user_edit', { 'id': user.id }) }}">
+                        <span class="fa fa-pencil" aria-hidden="true"></span> 
+                    </a>
+                </td>
+                <td>
+                    <a type="button" class="btn btn-danger delete" href="{{ path('mantenedor_user_show', { 'id': user.id }) }}">
+                        <span class="fa fa-trash" aria-hidden="true"></span>
+                    </a>
+                </td>
+			</tr>
+		{% endfor %}
+
+	</tbody>
+</table>
+
+{% endblock %}
+{% block javascripts %}
+    <script>
+    $(document).ready(function() {
+    $('#example').DataTable({
+    "language": {
+
+	search: "Buscar:",
+	"lengthMenu":     "Ver _MENU_ Entradas",
+	"info":           "Demostración _START_ a _END_ de _TOTAL_ entradas",
+	"zeroRecords":    "No se encontraron registros coincidentes",
+	"infoEmpty":      "Mostrando 0 de 0 entradas",
+	"infoFiltered":   "(Filtrado de _MAX_ entradas totales)",
+
+    
+    "paginate": {
+       previous: "Atras",
+	   next: "Siguiente"
+	   
+    }
+  }
+
+});
+ });
+</script>
+{% endblock %}
+
+
+
+

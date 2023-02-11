@@ -1,0 +1,101 @@
+{%   extends 'Main/base_test.html.twig'    %}  
+
+{% block body %}
+   
+           <div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title">EDITAR IMAGEN</h3>
+            </div>
+				
+	
+              {{form_start(edit_form, { 'enctype':"multipart/form-data"} )}}
+
+
+              <div class="box-body">
+              <div class="col-md-6">
+
+
+             
+
+
+
+              <div class="form-group">
+              {{ form_label(edit_form.tituloImagen) }}
+			        {{ form_widget(edit_form.tituloImagen, {'attr': {'class': 'form-control'}}) }}
+			        <span class="text-danger">{{ form_errors(edit_form.tituloImagen) }}</span>
+              </div>
+
+
+              
+              <div class="form-group">
+              {{ form_label(edit_form.descripcion) }}
+			        {{ form_widget(edit_form.descripcion, {'attr': {'class': 'form-control'}}) }}
+			        <span class="text-danger">{{ form_errors(edit_form.descripcion) }}</span>
+              </div>
+          
+
+              <div class="form-group">
+              {{ form_label(edit_form.archivo) }}
+			        {{ form_widget(edit_form.archivo, {'attr': {'class': 'form-control'}}) }}
+			        <span class="text-danger">{{ form_errors(edit_form.archivo) }}</span>
+
+              <div class="form-group">
+              {{ form_label(edit_form.url) }}
+			        {{ form_widget(edit_form.url, {'attr': {'class': 'form-control'}}) }}
+			        <span class="text-danger">{{ form_errors(edit_form.url) }}</span>
+
+           <br>
+            <h4>Imagen de Imagen</h4>
+            	{% for d in imagens %}
+              			{% if d.archivo %}
+				  	<a type="button" class="btn btn-info" onClick="javascript:window.open('{{ asset('uploads/' ~ d.archivo) }}','','width=600,height=400,left=50,top=50,toolbar=yes'); return false;"  href="">
+						  <span class="fa fa-image" aria-hidden="true"></span>
+				  	</a>	
+						    {% endif %}
+            {% endfor %}
+
+            <br>
+             <br>
+			      <p>
+
+			    	<input type="submit" class="btn btn-success " value="Guardar" id="guardarx1" onclick='buswa()'>
+
+		        </p> 
+
+              {{ form_end(edit_form) }}
+
+              
+             <ul>
+                  <li>
+                    <a href="{{ path('mantenedor_image_index') }}">Volver a Lista</a>
+                </li>
+          	</ul>  
+
+              </div>
+           </div>
+
+
+          </div>
+
+{% endblock %}
+
+{% block javascripts %}
+<script type="text/javascript">
+	$(function() {
+
+	});
+
+
+    function buswa(){
+
+		// alert(" click guardar");
+   
+		
+		$('[name=appbundle_imagen]').submit();  
+
+	}
+
+
+</script>
+
+{% endblock %}
