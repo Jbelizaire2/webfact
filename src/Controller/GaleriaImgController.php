@@ -15,7 +15,7 @@ class GaleriaImgController extends AbstractController
     {
          $conexion=$em->getConnection();
        
-        $image=  $conexion->fetchAllAssociative("SELECT *  FROM imagen AS b  WHERE b.id_status=3");
+        $image=  $conexion->fetchAllAssociative("SELECT *  FROM imagen AS b  WHERE b.id_status=3 ORDER BY b.titulo");
         return $this->render('galeria_img/index.html.twig', [
             'controller_name' => 'GaleriaImgController',
             'imagenes' => $image 
